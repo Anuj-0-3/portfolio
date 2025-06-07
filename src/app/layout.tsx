@@ -1,16 +1,13 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono,Alfa_Slab_One } from "next/font/google";
+import { Geist, Alfa_Slab_One } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/comoponents/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 const alfaSlabOne = Alfa_Slab_One({
   variable: "--font-alfa-slab-one",
@@ -29,10 +26,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} ${alfaSlabOne.variable} antialiased`}
-      >
+   <html lang="en" className={`${geistSans.variable} ${alfaSlabOne.variable} font-[var(--font-geist-sans)]`}>
+      <body >
+        <Navbar />
         {children}
       </body>
     </html>
