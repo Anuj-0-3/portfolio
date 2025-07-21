@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Alfa_Slab_One } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/comoponents/Navbar";
+import Footer from "@/comoponents/Footer";
+import CustomCursor from "@/comoponents/CustomCursor";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,8 +30,10 @@ export default function RootLayout({
   return (
    <html lang="en" className={`${geistSans.variable} ${alfaSlabOne.variable} font-[var(--font-geist-sans)]`}>
       <body >
+        <CustomCursor />
         <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );

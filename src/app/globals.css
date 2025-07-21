@@ -2,7 +2,7 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #1a1a1a;
 }
 
 @theme inline {
@@ -14,9 +14,12 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #1a1a1a;
     --foreground: #ededed;
   }
+}
+body, * {
+  cursor: none !important;
 }
 
 body {
@@ -27,4 +30,19 @@ body {
 
 .font-alfa {
   font-family: var(--font-alfa-slab-one);
+}
+
+@layer utilities {
+  .animate-slide {
+    animation: slide 40s linear infinite;
+  }
+
+  @keyframes slide {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
 }
