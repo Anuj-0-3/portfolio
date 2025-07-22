@@ -13,8 +13,8 @@ const techStacks = {
     { name: "React.js", logo: "/tech/react.svg" },
     { name: "Next.js", logo: "/tech/nextjs.svg" },
     { name: "Tailwind CSS", logo: "/tech/tailwind.svg" },
-    { name: "ShadCN UI", logo: "/tech/shadcn.png" },
-    { name: "Framer Motion", logo: "/tech/framer-motion.svg" },
+    { name: "ShadCN UI", logo: "/tech/shadcn.svg" },
+    { name: "Framer", logo: "/tech/framer.svg" },
     { name: "Lucide Icons", logo: "/tech/lucide.svg" },
     { name: "Swiper.js", logo: "/tech/swiperjs.svg" },
     { name: "Chart.js", logo: "/tech/chartjs.svg" }
@@ -44,7 +44,8 @@ const techStacks = {
     { name: "Cashfree", logo: "/tech/cashfree.svg" },
     { name: "Figma", logo: "/tech/figma.svg" },
     { name: "Conda", logo: "/tech/conda.svg" },
-    { name: "Python", logo: "/tech/python.svg" }
+    { name: "Python", logo: "/tech/python.svg" },
+    { name: "VsCode", logo: "/tech/vscode.svg" }
   ]
 };
 

@@ -12,7 +12,7 @@ const CtaSection = () => {
     >
       <div>
         <p className="text-xl sm:text-2xl font-light mb-6">
-          `&quot;`Turning ideas into interactive web experiences.`&quot;`
+          &quot;Turning ideas into interactive web experiences.&quot;
         </p>
         <a
           href="#projects"

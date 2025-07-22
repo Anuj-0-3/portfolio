@@ -20,13 +20,14 @@ const Hero = () => {
   const imageOpacity = useTransform(scrollYProgress, [0, 0.15], [0, 1]);
 
   const textScale = useTransform(scrollYProgress, [0, 0.3], [1, 0.6]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   return (
     <div className="relative h-[120vh] sm:h-[150vh] bg-[#1a1a1a] overflow-clip">
       {/* Sticky container */}
       <div className="sticky top-0 h-screen flex items-center justify-center z-20">
         <motion.div
-          style={{ scale: textScale }}
+          style={{ scale: textScale ,opacity: textOpacity}}
           className="text-center origin-center"
         >
           <h1 className="font-alfa text-[#fff5d1] leading-tight">

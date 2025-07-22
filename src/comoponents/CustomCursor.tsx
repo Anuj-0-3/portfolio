@@ -1,22 +1,35 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { motion, useMotionValue} from 'framer-motion';
 
 const CustomCursor = () => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  const springConfig = { damping: 20, stiffness: 300 };
-  const cursorX = useSpring(mouseX, springConfig);
-  const cursorY = useSpring(mouseY, springConfig);
+  const cursorX = mouseX;
+  const cursorY = mouseY;
 
-  const [isVisible, setIsVisible] = useState(true);
+
+  const [, setIsVisible] = useState(true);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   useEffect(() => {
+    // Detect touch devices and disable the cursor
+    const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    if (hasTouch) {
+      setIsTouchDevice(true);
+      return;
+    }
+
+    let animationFrameId: number;
+
     const moveCursor = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
+      cancelAnimationFrame(animationFrameId);
+      animationFrameId = requestAnimationFrame(() => {
+        mouseX.set(e.clientX);
+        mouseY.set(e.clientY);
+      });
     };
 
     const showCursor = () => setIsVisible(true);
@@ -30,31 +43,26 @@ const CustomCursor = () => {
       window.removeEventListener('mousemove', moveCursor);
       window.removeEventListener('mouseenter', showCursor);
       window.removeEventListener('mouseleave', hideCursor);
+      cancelAnimationFrame(animationFrameId);
     };
   }, [mouseX, mouseY]);
 
+  if (isTouchDevice) return null;
+
   return (
     <>
-      {/* Dot */}
+
       <motion.div
-        className="fixed top-0 left-0 z-[9999] pointer-events-none w-2 h-2 rounded-full bg-white mix-blend-difference"
+        className="fixed top-0 left-0 w-10 h-10 rounded-full pointer-events-none z-[9999] backdrop-blur-md bg-white/10 border border-white/20 shadow-md"
         style={{
           translateX: cursorX,
           translateY: cursorY,
+          marginLeft: '-1.25rem',
+          marginTop: '-1.25rem',
+          willChange: 'transform',
         }}
       />
 
-      {/* Circle */}
-      <motion.div
-        className="fixed top-0 left-0 z-[9998] pointer-events-none w-8 h-8 rounded-full border-2 border-white mix-blend-difference"
-        style={{
-          translateX: cursorX,
-          translateY: cursorY,
-          marginLeft: '-1rem',
-          marginTop: '-1rem',
-        }}
-        animate={{ opacity: isVisible ? 1 : 0 }}
-      />
     </>
   );
 };
