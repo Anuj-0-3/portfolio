@@ -4,55 +4,76 @@ import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const fadeSlide = {
+  hidden: { opacity: 0, x: 30 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: [0.42, 0, 0.58, 1] as [number, number, number, number], } },
+};
+
 const AboutMe = () => {
   return (
     <section
       id="about"
       className="bg-[#1a1a1a] text-white px-6 py-20 sm:px-10 md:px-20 lg:px-32"
     >
-      <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center md:items-start gap-10">
-        {/* Profile Image (hidden on mobile) */}
+      <motion.div
+        className="max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-start gap-10"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+      >
+        {/* Profile Image with fadeSlide left */}
         <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
+          variants={{
+            hidden: { opacity: 0, x: -30 },
+            visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: [0.42, 0, 0.58, 1] } },
+          }}
           className="hidden sm:block flex-shrink-0 pt-2"
+          aria-label="Profile Image of Anuj Singh"
         >
-          <div className="w-40 h-40 sm:w-52 sm:h-52 rounded-full overflow-hidden border-4 border-[#fff5d1] shadow-lg">
+          <div className="w-40 h-40 sm:w-52 sm:h-52 rounded-full overflow-hidden border-4 border-[#fff5d1] shadow-lg transition-transform hover:scale-105">
             <Image
               src="/mebw.png"
               alt="Anuj Singh"
               width={208}
               height={208}
               className="object-cover w-full h-full"
+              priority
             />
           </div>
         </motion.div>
 
-        {/* Text Content */}
+        {/* Text Content with fadeSlide right */}
         <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 }}
+          variants={fadeSlide}
           className="text-left"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-[#fff5d1]">
+          <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-[#fff5d1] select-none">
             About Me
           </h2>
 
           <p className="text-lg sm:text-xl leading-relaxed text-gray-300 mb-6">
-            Hi, I’m <span className="font-semibold text-white">Anuj Singh</span> — a results-driven Full Stack Developer and Generative AI practitioner. I help businesses and startups turn ideas into fast, responsive, and scalable web applications using technologies like <strong>React.js</strong>, <strong>Next.js</strong>, <strong>Node.js</strong>, and <strong>MongoDB</strong>.
+            I’m <span className="font-semibold text-white">Anuj Singh</span>, a Full Stack Developer and Generative AI practitioner. I specialize in building lightning-fast, scalable, and user-first applications using <strong>React.js</strong>, <strong>Next.js</strong>, <strong>MongoDB</strong>, and <strong>Node.js</strong>.
           </p>
 
           <p className="text-lg sm:text-xl leading-relaxed text-gray-300 mb-6">
-            With hands-on experience in building real-time platforms (like auctions, dashboards, and OTP-based portals), I bring not just clean code but also clear communication and on-time delivery. I also integrate AI features using tools like <strong>Langchain</strong> and <strong>Huggingface</strong> to take your digital products to the next level.
+            From real-time auction platforms to AI-integrated tools, I transform ideas into production-grade products. My work is powered by tools like <strong>Langchain</strong>, <strong>Huggingface</strong>, <strong>Pusher</strong>, and <strong>Cashfree</strong> — always with clean UI, optimized performance, and clear delivery timelines.
           </p>
 
-          <p className="text-lg sm:text-xl leading-relaxed text-gray-300 mb-6">
-            Let’s build something your users will love — and your business will benefit from.
+          <p className="text-lg sm:text-xl leading-relaxed text-gray-300 mb-6 italic">
+            Let&apos;s create software that doesn&apos;t just work, but <span className="text-[#fff5d1] font-semibold">wins</span>.
           </p>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 };

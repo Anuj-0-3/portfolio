@@ -1,115 +1,89 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 const projects = [
   {
-    title: "Ubuy - Realtime Auction Platform",
+    title: 'Ubuy - Realtime Auction Platform',
     description:
-      "A feature-rich bidding system with live auction updates using WebSockets (Socket.IO/Pusher), admin controls, user dashboard, and Cashfree payment integration.",
-    tech: ["Next.js", "Node.js", "MongoDB", "Pusher", "Cashfree"],
-    images: [
-      "/projects/ubuy1.png",
-      "/projects/ubuy2.png",
-      "/projects/ubuy3.png"
-    ],
-    link: "https://ubuy-theta.vercel.app/"
+      'Live bidding system with WebSockets (Socket.IO/Pusher), real-time updates, admin/user dashboards, and Cashfree integration.',
+    tech: ['Next.js', 'Node.js', 'MongoDB', 'Pusher', 'Cashfree'],
+    images: ['/projects/ubuy1.png', '/projects/ubuy2.png', '/projects/ubuy3.png'],
+    link: 'https://ubuy-theta.vercel.app/',
   },
   {
-    title: "AI Blog Generator",
+    title: 'IntelliPage - AI Notion Clone',
     description:
-      "Generate SEO-optimized blog posts using OpenAI and Langchain. Supports dynamic prompt templates, user input, and clean UI for content marketers.",
-    tech: ["React.js", "Langchain", "OpenAI", "Express.js"],
-    images: [
-      "/projects/aiblog1.png",
-      "/projects/aiblog2.png"
-    ],
-    link: "https://aiblog.techsaviour.in"
+      'AI-powered Notion-like platform using Langchain and OpenAI. Supports collaborative editing and dynamic page generation.',
+    tech: ['Next.js', 'MongoDB', 'Langchain', 'ShadCN UI'],
+    images: ['/projects/ip1.png', '/projects/intellipage2.png'],
+    link: 'https://intellipage.techsaviour.in',
   },
   {
-    title: "OTP Auth Portal",
+    title: 'Banquet Hall Website',
     description:
-      "Mobile-first user authentication system using Firebase for OTP verification. Integrated with custom email templates and responsive UI.",
-    tech: ["Firebase", "React.js", "Tailwind CSS"],
-    images: [
-      "/projects/otp1.png",
-      "/projects/otp2.png"
-    ],
-    link: "https://auth.techsaviour.in"
+      'Multi-page responsive site for a Banquet hall event booking  with clean design and framer motion.',
+    tech: ['HTML', 'CSS', 'JavaScript', 'Framer Motion'],
+    images: ['/projects/bqh1.png', '/projects/bqh2.png', '/projects/bqh3.png','/projects/bqh4.png'],
+    link: 'banquethall-one.vercel.app',
   },
   {
-    title: "IntelliPage - AI Notion Clone",
+    title: 'Password Manager',
     description:
-      "A collaborative Notion-like workspace with AI support for smart suggestions and dynamic page generation using Langchain and OpenAI.",
-    tech: ["Next.js", "MongoDB", "Langchain", "ShadCN UI"],
-    images: [
-      "/projects/intellipage1.png",
-      "/projects/intellipage2.png"
-    ],
-    link: "https://intellipage.techsaviour.in"
+      'Secure CRUD-based password manager built with React and Vite. Clean UI, MongoDB-backed, easy-to-use.',
+    tech: ['React', 'Vite', 'MongoDB', 'Node.js'],
+    images: ['/projects/password1.png', '/projects/password2.png'],
+    link: 'https://password.techsaviour.in',
   },
-  {
-    title: "Coaching Institute Website",
-    description:
-      "A responsive, multi-page website for a coaching institute and play school, showcasing programs, contact, and admission sections.",
-    tech: ["HTML", "CSS", "JavaScript", "Swiper.js"],
-    images: [
-      "/projects/institute1.png",
-      "/projects/institute2.png"
-    ],
-    link: "https://school.techsaviour.in"
-  },
-  {
-    title: "Password Manager",
-    description:
-      "A full-stack password manager using React, Vite, and MongoDB. Supports secure CRUD operations and modern UI.",
-    tech: ["React", "Vite", "MongoDB", "Node.js"],
-    images: [
-      "/projects/password1.png",
-      "/projects/password2.png"
-    ],
-    link: "https://password.techsaviour.in"
-  }
 ];
-
 
 const ProjectCard = ({ project }: { project: typeof projects[0] }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [hovered, setHovered] = useState(false);
 
   useEffect(() => {
+    if (hovered) return;
+
     const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) =>
-        (prevIndex + 1) % project.images.length
-      );
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % project.images.length);
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [project.images.length]);
+  }, [project.images.length, hovered]);
 
   return (
     <motion.div
-      whileHover={{ y: -5, scale: 1.02 }}
+      whileHover={{ y: -8, scale: 1.04, boxShadow: '0 8px 20px rgba(255, 245, 209, 0.4)' }}
       transition={{ duration: 0.3 }}
-      className="bg-[#111] border border-[#2a2a2a] rounded-xl overflow-hidden shadow-md"
+      className="bg-[#111] border border-[#2a2a2a] rounded-xl overflow-hidden shadow-md cursor-pointer"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
-      <a href={project.link} target="_blank" rel="noopener noreferrer">
-        <Image
-          src={project.images[currentImageIndex]}
-          alt={project.title}
-          width={600}
-          height={350}
-          className="w-full object-cover h-48 sm:h-56"
-        />
+      <a
+        href={project.link}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block"
+      >
+        <motion.div
+          initial={{ opacity: 0.7 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+        >
+          <Image
+            src={project.images[currentImageIndex]}
+            alt={`${project.title} screenshot`}
+            width={600}
+            height={350}
+            className="w-full object-cover h-48 sm:h-56 rounded-t-xl"
+            priority
+          />
+        </motion.div>
         <div className="p-5">
-          <h3 className="text-xl font-semibold text-white mb-2">
-            {project.title}
-          </h3>
-          <p className="text-gray-400 text-sm mb-3">
-            {project.description}
-          </p>
+          <h3 className="text-xl font-semibold text-white mb-2">{project.title}</h3>
+          <p className="text-gray-400 text-sm mb-3">{project.description}</p>
           <div className="flex flex-wrap gap-2">
             {project.tech.map((tech, idx) => (
               <span
@@ -127,26 +101,36 @@ const ProjectCard = ({ project }: { project: typeof projects[0] }) => {
 };
 
 const Projects = () => {
+  const [showAll, setShowAll] = useState(false);
+
   return (
     <section
       id="projects"
       className="bg-[#1a1a1a] text-white py-20 px-6 sm:px-10 md:px-20"
     >
-      <h2 className="text-3xl sm:text-4xl font-bold text-[#fff5d1] mb-12">
+      <motion.h2
+        className="text-3xl sm:text-4xl font-bold text-[#fff5d1] mb-12"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+      >
         Projects
-      </h2>
+      </motion.h2>
+
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        {projects.slice(0, 3).map((project, index) => (
+        {(showAll ? projects : projects.slice(0, 3)).map((project, index) => (
           <ProjectCard key={index} project={project} />
         ))}
       </div>
+
       <div className="text-center mt-10">
-        <Link
-          href="/projects"
-          className="inline-block bg-[#fff5d1] text-black px-6 py-3 rounded-full font-medium transition hover:scale-105"
+        <button
+          onClick={() => setShowAll(!showAll)}
+          className="inline-block bg-[#fff5d1] text-black px-6 py-3 rounded-full font-medium transition hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#fff5d1]"
         >
-          View All Projects
-        </Link>
+          {showAll ? 'Show Less' : 'View All Projects'}
+        </button>
       </div>
     </section>
   );

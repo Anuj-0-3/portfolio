@@ -29,7 +29,7 @@ const Navbar = () => {
       <motion.header
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.4 }}
+        transition={{ duration: 0.5 }}
         className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
           scrolled
             ? 'backdrop-blur-lg bg-white/10 border-b border-white/20'
@@ -38,42 +38,57 @@ const Navbar = () => {
       >
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between text-white">
           {/* Logo */}
-          <div className="text-xl font-extrabold">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            className="text-xl font-extrabold"
+          >
             <Link href="/">
-              <span className="text-[#fff5d1] text-xl tracking-wide">Portfolio</span>
+              <span className="text-[#fff5d1] tracking-wide relative">
+                Portfolio
+              </span>
             </Link>
-          </div>
+          </motion.div>
 
           {/* Desktop Nav */}
-          <ul className="hidden md:flex space-x-6 text-sm">
+          <ul className="hidden md:flex space-x-6 text-sm font-medium">
             {navLinks.map(({ href, label }) => (
               <li key={label}>
-                <Link href={href} className="hover:text-[#fff5d1] transition">
+                <Link
+                  href={href}
+                  className="relative group transition-colors duration-300 hover:text-[#fff5d1]"
+                >
                   {label}
+                  <span className="absolute left-0 -bottom-0.5 w-0 h-[2px] bg-[#fff5d1] transition-all duration-300 group-hover:w-full" />
                 </Link>
               </li>
             ))}
           </ul>
 
           {/* Contact Button (Desktop) */}
-          <div className="hidden md:block">
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            className="hidden md:block"
+          >
             <Link
               href="#contact"
-              className="bg-[#fff5d1] font-alfa text-[#201A00] py-1 px-4 rounded-full shadow hover:scale-105 transition-transform"
+              className="bg-[#fff5d1] font-alfa text-[#201A00] py-1 px-4 rounded-full shadow hover:shadow-yellow-100 transition-all"
             >
               Contact
             </Link>
-          </div>
+          </motion.div>
 
           {/* Mobile Toggle */}
           <div className="md:hidden z-50">
-            <button
+            <motion.button
+              whileTap={{ rotate: 90 }}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle Menu"
               className="text-[#fff5d1]"
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
+            </motion.button>
           </div>
         </nav>
 
@@ -84,7 +99,7 @@ const Navbar = () => {
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
-              transition={{ duration: 0.3, ease: 'easeInOut' }}
+              transition={{ duration: 0.4, ease: 'easeInOut' }}
               className="fixed top-0 right-0 h-full w-[80%] sm:w-[60%] bg-white/10 backdrop-blur-lg border-l border-white/20 z-40 md:hidden"
             >
               <ul className="flex flex-col space-y-6 p-6 pt-20 text-left text-[#fff5d1] text-lg font-semibold">
@@ -118,4 +133,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-

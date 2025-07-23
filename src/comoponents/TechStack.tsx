@@ -1,78 +1,82 @@
-"use client";
+'use client';
 
-import React from "react";
-import Image from "next/image";
-import { motion } from "framer-motion";
+import React from 'react';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
+import { Sparkles, BrainCircuit, Cpu } from 'lucide-react';
 
 const techStacks = {
-  frontend: [
-    { name: "HTML", logo: "/tech/html.svg" },
-    { name: "CSS", logo: "/tech/css.svg" },
-    { name: "JavaScript", logo: "/tech/javascript.svg" },
-    { name: "TypeScript", logo: "/tech/typescript.svg" },
-    { name: "React.js", logo: "/tech/react.svg" },
-    { name: "Next.js", logo: "/tech/nextjs.svg" },
-    { name: "Tailwind CSS", logo: "/tech/tailwind.svg" },
-    { name: "ShadCN UI", logo: "/tech/shadcn.svg" },
-    { name: "Framer", logo: "/tech/framer.svg" },
-    { name: "Lucide Icons", logo: "/tech/lucide.svg" },
-    { name: "Swiper.js", logo: "/tech/swiperjs.svg" },
-    { name: "Chart.js", logo: "/tech/chartjs.svg" }
+  core: [
+    { name: 'React.js', logo: '/tech/react.svg' },
+    { name: 'Next.js', logo: '/tech/nextjs.svg' },
+    { name: 'TypeScript', logo: '/tech/typescript.svg' },
+    { name: 'Tailwind CSS', logo: '/tech/tailwind.svg' },
+    { name: 'Firebase', logo: '/tech/firebase.svg' },
+    { name: 'MongoDB', logo: '/tech/mongo.svg' },
+    { name: 'Node.js', logo: '/tech/nodejs.svg' },
+    { name: 'Express.js', logo: '/tech/express.svg' },
+    { name: 'Vercel', logo: '/tech/vercel.svg' },
+    { name: 'Netlify', logo: '/tech/netlify.svg' },
+    { name: 'GitHub', logo: '/tech/github.svg' },
   ],
-  backend: [
-    { name: "Node.js", logo: "/tech/nodejs.svg" },
-    { name: "Express.js", logo: "/tech/express.svg" },
-    { name: "MongoDB", logo: "/tech/mongodb.svg" },
-    { name: "Mongoose", logo: "/tech/mongoose.svg" },
-    { name: "Firebase", logo: "/tech/firebase.svg" },
-    { name: "Postman", logo: "/tech/postman.svg" },
-    { name: "Nodemailer", logo: "/tech/nodemailer.svg" },
-    { name: "GitHub", logo: "/tech/github.svg" },
-    { name: "VS Code", logo: "/tech/vscode.svg" },
-    { name: "Vercel", logo: "/tech/vercel.svg" },
-    { name: "Netlify", logo: "/tech/netlify.svg" },
-    { name: "Render", logo: "/tech/render.svg" },
-    { name: "Cloudflare", logo: "/tech/cloudflare.svg" }
+  specialty: [
+    { name: 'LangChain', logo: '/tech/langchain.png' },
+    { name: 'OpenAI', logo: '/tech/openai.svg' },
+    { name: 'Socket.IO', logo: '/tech/socketio.svg' },
+    { name: 'Framer Motion', logo: '/tech/framer.svg' },
+    { name: 'ShadCN UI', logo: '/tech/shadcn.svg' },
+    { name: 'Cashfree', logo: '/tech/cashfree.svg' },
+    { name: 'Swiper.js', logo: '/tech/swiperjs.svg' },
+    { name: 'Figma', logo: '/tech/figma.svg' },
   ],
-  ai: [
-    { name: "Langchain", logo: "/tech/langchain.png" },
-    { name: "Huggingface", logo: "/tech/huggingface.svg" },
-    { name: "OpenAI", logo: "/tech/openai.svg" },
-    { name: "RAG Pipelines", logo: "/tech/rag.svg" },
-    { name: "Socket.IO", logo: "/tech/socketio.svg" },
-    { name: "Pusher", logo: "/tech/pusher.svg" },
-    { name: "Cashfree", logo: "/tech/cashfree.svg" },
-    { name: "Figma", logo: "/tech/figma.svg" },
-    { name: "Conda", logo: "/tech/conda.svg" },
-    { name: "Python", logo: "/tech/python.svg" },
-    { name: "VsCode", logo: "/tech/vscode.svg" }
-  ]
 };
 
+const fadeInUp = {
+  initial: { opacity: 0, y: 40 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.5,ease: [0.42, 0, 0.58, 1] as [number, number, number, number] } },
+};
+
+const TechCard = ({ tech }: { tech: { name: string; logo: string } }) => (
+  <motion.div
+    variants={fadeInUp}
+    whileHover={{ scale: 1.1, boxShadow: '0 4px 15px rgba(255, 245, 209, 0.5)' }}
+    className="group flex flex-col items-center justify-center w-24 shrink-0 p-3 bg-white/5 backdrop-blur-md rounded-xl cursor-pointer hover:bg-white/10 transition-all duration-300"
+    role="img"
+    aria-label={tech.name}
+  >
+    <Image
+      src={tech.logo}
+      alt={tech.name}
+      width={40}
+      height={40}
+      className="mb-2"
+      title={tech.name}
+      priority
+    />
+    <span className="text-sm text-white text-center opacity-80 group-hover:opacity-100 transition">
+      {tech.name}
+    </span>
+  </motion.div>
+);
+
 const Row = ({ items }: { items: { name: string; logo: string }[] }) => {
+  const duplicated = [...items, ...items, ...items]; // triple for seamless scrolling
+
   return (
-    <div className="overflow-hidden w-full py-4">
+    <div className="overflow-hidden w-full py-4" aria-label="Scrolling technology logos">
       <motion.div
-        className="flex w-max animate-slide gap-4"
-        animate={{ x: ["0%", "-50%"] }}
-        transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
+        className="flex gap-4 w-max"
+        animate={{ x: ['0%', '-33.333%'] }}
+        transition={{
+          repeat: Infinity,
+          repeatType: 'loop',
+          duration: items.length * 2.5,
+          ease: 'linear',
+        }}
+        aria-hidden="true"
       >
-        {[...items, ...items].map((tech, i) => (
-          <div
-            key={`${tech.name}-${i}`}
-            className="flex flex-col items-center justify-center w-24 shrink-0"
-          >
-            <Image
-              src={tech.logo}
-              alt={tech.name}
-              width={40}
-              height={40}
-              className="mb-1"
-            />
-            <span className="text-sm text-white text-center opacity-80">
-              {tech.name}
-            </span>
-          </div>
+        {duplicated.map((tech, i) => (
+          <TechCard key={`${tech.name}-${i}`} tech={tech} />
         ))}
       </motion.div>
     </div>
@@ -81,30 +85,60 @@ const Row = ({ items }: { items: { name: string; logo: string }[] }) => {
 
 const TechStack = () => {
   return (
-    <section className="bg-[#1a1a1a] py-16 px-6 sm:px-10 md:px-20">
-      <h2 className="text-3xl sm:text-4xl font-bold text-[#fff5d1] mb-8">
-        Tech Stack
-      </h2>
+    <section
+      className="relative bg-gradient-to-b from-[#1a1a1a] to-[#111] py-20 px-6 sm:px-10 md:px-20 overflow-hidden"
+      aria-labelledby="techstack-title"
+    >
+      {/* Glowing Blobs */}
+      <div className="absolute w-60 h-60 bg-purple-500/20 rounded-full blur-3xl top-10 left-10 z-0 animate-pulse" />
+      <div className="absolute w-40 h-40 bg-yellow-500/10 rounded-full blur-2xl bottom-10 right-10 z-0 animate-pulse" />
 
-      <div className="space-y-6">
-        <div>
-          <h3 className="text-xl text-[#fff5d1] font-semibold mb-2">
-           Frontend
-          </h3>
-          <Row items={techStacks.frontend} />
-        </div>
-        <div>
-          <h3 className="text-xl text-[#fff5d1] font-semibold mb-2">
-            Backend & Tools
-          </h3>
-          <Row items={techStacks.backend} />
-        </div>
-        <div>
-          <h3 className="text-xl text-[#fff5d1] font-semibold mb-2">
-            AI / Realtime / Extras
-          </h3>
-          <Row items={techStacks.ai} />
-        </div>
+      <motion.h2
+        id="techstack-title"
+        className="flex items-center gap-3 text-3xl sm:text-4xl font-bold text-[#fff5d1] mb-12 relative z-10 select-none"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.4 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+      >
+        <Cpu className="w-8 h-8 text-gray-300" />
+        What I Build With
+      </motion.h2>
+
+      <div className="space-y-16 relative z-10">
+        {/* Core Tech */}
+        <motion.div
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true, amount: 0.3 }}
+          className="space-y-6"
+        >
+          <div className="flex items-center gap-2 mb-2 text-[#fff5d1]">
+            <Sparkles className="w-5 h-5 text-yellow-300" aria-hidden="true" />
+            <h3 className="text-xl font-semibold">Core Tech Stack (Client-Ready)</h3>
+          </div>
+          <p className="text-sm text-white/70 max-w-3xl mb-2">
+            These are my go-to tools for building full-stack web applications, landing pages, dashboards, and MVPs that scale and ship fast.
+          </p>
+          <Row items={techStacks.core} />
+        </motion.div>
+
+        {/* Specialty Tech */}
+        <motion.div
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true, amount: 0.3 }}
+          className="space-y-6"
+        >
+          <div className="flex items-center gap-2 mb-2 text-[#fff5d1]">
+            <BrainCircuit className="w-5 h-5 text-purple-300" aria-hidden="true" />
+            <h3 className="text-xl font-semibold">Advanced & Specialized Stack</h3>
+          </div>
+          <p className="text-sm text-white/70 max-w-3xl mb-2">
+            From real-time applications to AI integrations and creative UI enhancements, these tools allow me to deliver truly next-gen experiences.
+          </p>
+          <Row items={techStacks.specialty} />
+        </motion.div>
       </div>
     </section>
   );

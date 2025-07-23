@@ -1,21 +1,25 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion, useMotionValue} from 'framer-motion';
+import { motion, useMotionValue, useSpring, useAnimation } from 'framer-motion';
 
 const CustomCursor = () => {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
+  const mouseX = useMotionValue(-100); // start offscreen
+  const mouseY = useMotionValue(-100);
 
-  const cursorX = mouseX;
-  const cursorY = mouseY;
+  // Outer ring lags behind mouse with spring
+  const springConfig = { damping: 20, stiffness: 150 };
+  const ringX = useSpring(mouseX, springConfig);
+  const ringY = useSpring(mouseY, springConfig);
 
-
-  const [, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(true);
+  const [, setIsHovering] = useState(false);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
 
+  // Controls for hover animation on ring
+  const ringControls = useAnimation();
+
   useEffect(() => {
-    // Detect touch devices and disable the cursor
     const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     if (hasTouch) {
       setIsTouchDevice(true);
@@ -29,6 +33,7 @@ const CustomCursor = () => {
       animationFrameId = requestAnimationFrame(() => {
         mouseX.set(e.clientX);
         mouseY.set(e.clientY);
+        setIsVisible(true);
       });
     };
 
@@ -39,30 +44,86 @@ const CustomCursor = () => {
     window.addEventListener('mouseenter', showCursor);
     window.addEventListener('mouseleave', hideCursor);
 
+    // Hover detection on interactive elements
+    const interactiveEls = ['a', 'button', 'input', 'textarea', 'select', 'label'];
+
+    const handleHoverEvents = (e: Event) => {
+      if ((e.target as HTMLElement).closest(interactiveEls.join(','))) {
+        setIsHovering(true);
+        ringControls.start({
+          scale: 2,
+          borderColor: '#fff5d1',
+          backgroundColor: 'rgba(255, 245, 209, 0.15)',
+          transition: { type: 'spring', stiffness: 300, damping: 20 },
+        });
+      }
+    };
+
+    const handleHoverEnd = () => {
+      setIsHovering(false);
+      ringControls.start({
+        scale: 1,
+        borderColor: 'rgba(255, 255, 255, 0.3)',
+        backgroundColor: 'rgba(255, 255, 255, 0.05)',
+        transition: { type: 'spring', stiffness: 300, damping: 20 },
+      });
+    };
+
+    document.querySelectorAll(interactiveEls.join(',')).forEach((el) => {
+      el.addEventListener('mouseenter', handleHoverEvents);
+      el.addEventListener('mouseleave', handleHoverEnd);
+    });
+
     return () => {
       window.removeEventListener('mousemove', moveCursor);
       window.removeEventListener('mouseenter', showCursor);
       window.removeEventListener('mouseleave', hideCursor);
       cancelAnimationFrame(animationFrameId);
+
+      document.querySelectorAll(interactiveEls.join(',')).forEach((el) => {
+        el.removeEventListener('mouseenter', handleHoverEvents);
+        el.removeEventListener('mouseleave', handleHoverEnd);
+      });
     };
-  }, [mouseX, mouseY]);
+  }, [mouseX, mouseY, ringControls]);
 
   if (isTouchDevice) return null;
 
   return (
     <>
-
+      {/* Small solid dot cursor */}
       <motion.div
-        className="fixed top-0 left-0 w-10 h-10 rounded-full pointer-events-none z-[9999] backdrop-blur-md bg-white/10 border border-white/20 shadow-md"
+        className="fixed top-0 left-0 w-3 h-3 rounded-full bg-[#fff5d1] pointer-events-none z-[9999]"
         style={{
-          translateX: cursorX,
-          translateY: cursorY,
-          marginLeft: '-1.25rem',
-          marginTop: '-1.25rem',
-          willChange: 'transform',
+          translateX: mouseX,
+          translateY: mouseY,
+          marginLeft: '-0.375rem',
+          marginTop: '-0.375rem',
+          opacity: isVisible ? 1 : 0,
+          willChange: 'transform, opacity',
         }}
+        transition={{ type: 'spring', stiffness: 1000, damping: 50 }}
       />
 
+      {/* Outer ring */}
+      <motion.div
+        className="fixed top-0 left-0 w-8 h-8 rounded-full border border-white/30 pointer-events-none z-[9998]"
+        style={{
+          translateX: ringX,
+          translateY: ringY,
+          marginLeft: '-1rem',
+          marginTop: '-1rem',
+          opacity: isVisible ? 1 : 0,
+          willChange: 'transform, opacity, border-color, background-color',
+          backgroundColor: 'rgba(255, 255, 255, 0.05)',
+        }}
+        animate={ringControls}
+        initial={{
+          scale: 1,
+          borderColor: 'rgba(255, 255, 255, 0.3)',
+          backgroundColor: 'rgba(255, 255, 255, 0.05)',
+        }}
+      />
     </>
   );
 };
