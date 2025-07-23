@@ -17,15 +17,15 @@ const projects = [
     title: 'IntelliPage - AI Notion Clone',
     description:
       'AI-powered Notion-like platform using Langchain and OpenAI. Supports collaborative editing and dynamic page generation.',
-    tech: ['Next.js', 'MongoDB', 'Langchain', 'ShadCN UI'],
-    images: ['/projects/ip1.png', '/projects/intellipage2.png'],
+    tech: ['Next.js', 'LiveBlocks', 'Firebase', 'ShadCN UI'],
+    images: ['/projects/ip1.png', '/projects/ip2.png'],
     link: 'https://intellipage.techsaviour.in',
   },
   {
     title: 'Banquet Hall Website',
     description:
       'Multi-page responsive site for a Banquet hall event booking  with clean design and framer motion.',
-    tech: ['HTML', 'CSS', 'JavaScript', 'Framer Motion'],
+    tech: ['Next.js', 'CSS', 'Typescript', 'Framer Motion'],
     images: ['/projects/bqh1.png', '/projects/bqh2.png', '/projects/bqh3.png','/projects/bqh4.png'],
     link: 'banquethall-one.vercel.app',
   },

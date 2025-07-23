@@ -21,7 +21,7 @@ const Navbar = () => {
     { href: '/', label: 'Home' },
     { href: '#projects', label: 'Projects' },
     { href: '#techstack', label: 'Tech Stack' },
-    { href: '#socialmedia', label: 'Social Media' },
+    { href: '#about', label: 'About Me' },
   ];
 
   return (

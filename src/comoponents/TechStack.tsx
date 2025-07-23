@@ -20,13 +20,13 @@ const techStacks = {
     { name: 'GitHub', logo: '/tech/github.svg' },
   ],
   specialty: [
-    { name: 'LangChain', logo: '/tech/langchain.png' },
+    { name: 'LangChain', logo: '/tech/langchain.svg' },
     { name: 'OpenAI', logo: '/tech/openai.svg' },
-    { name: 'Socket.IO', logo: '/tech/socketio.svg' },
+    { name: 'Socket.IO', logo: '/tech/socket.svg' },
     { name: 'Framer Motion', logo: '/tech/framer.svg' },
     { name: 'ShadCN UI', logo: '/tech/shadcn.svg' },
     { name: 'Cashfree', logo: '/tech/cashfree.svg' },
-    { name: 'Swiper.js', logo: '/tech/swiperjs.svg' },
+    { name: 'Swiper.js', logo: '/tech/swiper.svg' },
     { name: 'Figma', logo: '/tech/figma.svg' },
   ],
 };
@@ -87,6 +87,7 @@ const TechStack = () => {
   return (
     <section
       className="relative bg-gradient-to-b from-[#1a1a1a] to-[#111] py-20 px-6 sm:px-10 md:px-20 overflow-hidden"
+      id="techstack"
       aria-labelledby="techstack-title"
     >
       {/* Glowing Blobs */}

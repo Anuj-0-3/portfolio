@@ -42,17 +42,18 @@ const Footer = () => {
         >
           {[
             {
-              href: "https://github.com/anujsinghwd",
+              href: "https://github.com/Anuj-0-3",
               icon: <FaGithub />,
               label: "GitHub",
             },
             {
-              href: "https://linkedin.com/in/anujsinghwd",
+              href: "https://www.linkedin.com/in/anuj-singh-1b448a314/",
               icon: <FaLinkedin />,
               label: "LinkedIn",
             },
             {
-              href: "mailto:anujsinghwd@gmail.com",
+              href:
+                "https://mail.google.com/mail/?view=cm&fs=1&to=anujsingh.devx@gmail.com&su=Inquiry%20from%20Portfolio&body=Hi%20Anuj,%0AI%20came%20across%20your%20portfolio%20and%20wanted%20to%20reach%20out...",
               icon: <FaEnvelope />,
               label: "Email",
             },
