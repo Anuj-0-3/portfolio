@@ -58,8 +58,12 @@ const Contact = () => {
       setSubmitted(true);
       toast.success('🎉 Your message has been sent!');
       setForm({ name: '', email: '', message: '' });
-    } catch (err: any) {
-      toast.error(err.message || 'Something went wrong.');
+    } catch (err) {
+      if (err instanceof Error) {
+        toast.error(err.message || 'Something went wrong.');
+      } else {
+        toast.error('Something went wrong.');
+      }
     }
   };
 

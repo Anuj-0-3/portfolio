@@ -96,10 +96,14 @@ export async function POST(req: Request) {
     await transporter.sendMail(mailOptions);
 
     return NextResponse.json({ message: 'Your message has been sent successfully!' }, { status: 200 });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Email sending failed:', error);
+    let errorMessage = 'Unknown error';
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    }
     return NextResponse.json(
-      { message: 'Something went wrong while sending your message.', error: error.message },
+      { message: 'Something went wrong while sending your message.', error: errorMessage },
       { status: 500 }
     );
   }
