@@ -27,7 +27,7 @@ const projects = [
       'Multi-page responsive site for a Banquet hall event booking  with clean design and framer motion.',
     tech: ['Next.js', 'CSS', 'Typescript', 'Framer Motion'],
     images: ['/projects/bqh1.png', '/projects/bqh2.png', '/projects/bqh3.png','/projects/bqh4.png'],
-    link: 'banquethall-one.vercel.app',
+    link: 'https://banquethall-one.vercel.app',
   },
   {
     title: 'Password Manager',
