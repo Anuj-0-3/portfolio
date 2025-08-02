@@ -119,7 +119,7 @@ const Contact = () => {
           <div className="flex justify-center gap-8 text-3xl">
             {[
               { href: 'https://github.com/Anuj-0-3', Icon: Github, label: 'GitHub' },
-              { href: 'https://www.linkedin.com/in/anuj-singh-1b448a314/', Icon: Linkedin, label: 'LinkedIn' },
+              { href: 'https://www.linkedin.com/in/anujsinghdevx/', Icon: Linkedin, label: 'LinkedIn' },
               { href: `mailto:${EMAIL}?subject=Contact%20via%20Portfolio`, Icon: Mail, label: 'Email' }, // mailto here
             ].map(({ href, Icon, label }) => (
               <motion.a

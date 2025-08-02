@@ -50,7 +50,7 @@ const Footer = () => {
                 label: "GitHub",
               },
               {
-                href: "https://www.linkedin.com/in/anuj-singh-1b448a314/",
+                href: "https://www.linkedin.com/in/anujsinghdevx/",
                 icon: <FaLinkedin />,
                 label: "LinkedIn",
               },
